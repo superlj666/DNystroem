@@ -1,0 +1,30 @@
+# searchSpaceFile: search_space.json
+searchSpace:
+  kernel_par:
+    _type: choice
+    _value: [0.001, 0.01, 0.1, 1.01, 10.01, 100.01]
+  lambda_reg:
+    _type: choice
+    _value: [0.01, 0.001, 0.0001, 0.00001, 0.000001, 0.0000001]
+  # m:
+  #   _type: choice
+  #   _value: [10, 20, 30, 40, 50, 60]
+  # M:
+  #   _type: choice
+  #   _value: [200, 400, 600, 800]
+  # estimator:
+  #   _type: choice
+  #   _value: ['DCNY', 'DNystroem']
+
+trialCommand: python3 tune_hyperparameter.py --dataset EEG --m 20 --M 500
+trialGpuNumber: 1
+trialConcurrency: 1
+maxTrialNumber: 100
+tuner:
+  name: TPE
+  classArgs:
+    optimize_mode: minimize
+trainingService:  # For other platforms, check mnist-pytorch example
+  platform: local
+  useActiveGpu: true  
+  maxTrialNumberPerGpu: 1
